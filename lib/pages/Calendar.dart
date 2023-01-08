@@ -1,7 +1,9 @@
 //import 'dart:js';
 
+import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:project1/services/EventClass.dart';
 
 class CalendarPage extends StatefulWidget {
 
@@ -10,6 +12,95 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+
+
+  List<String> EventTypes = ['Type1', 'Type2', 'Type3'];
+
+  List<Event> YourEvents = [new Event('1',DateTime.now()),];
+
+  var _time;
+
+ Future<void> openDialog() async{
+   await showDialog<void>(
+ context: context,
+ builder: (BuildContext context) {
+ return SimpleDialog( // <-- SEE HERE
+ title: const Text('Event Type'),
+ children: [
+   ...EventTypes.map((value) {
+     return SimpleDialogOption(child: Text(value),onPressed:()=> next(value),);
+   }),
+   TextButton(onPressed: cancel, child: Text('cancel'))
+ ],
+ );
+ });
+}
+
+
+
+ Future openDialog1(String v) => showDialog(context: context,
+     builder: (content)=>AlertDialog(
+       title:Text('Event Date'),
+       content: DateTimeFormField(
+         decoration: const InputDecoration(
+           hintStyle: TextStyle(color: Colors.black45),
+           errorStyle: TextStyle(color: Colors.redAccent),
+           border: OutlineInputBorder(),
+           suffixIcon: Icon(Icons.event_note),
+           labelText: 'choose date',
+         ),
+         mode: DateTimeFieldPickerMode.date,
+         autovalidateMode: AutovalidateMode.always,
+         validator: (e) => (e?.day ?? 0) == 1 ? 'Please not the first day' : null,
+         onDateSelected: (DateTime value){
+           setState(() => _time = value);
+         },
+       ),
+       actions: [
+         TextButton(child: Text('cancel'),onPressed: cancel, ),
+         TextButton(child: Text('done'),onPressed:()=>
+         {submit(new Event(v,_time))}, )
+       ],
+
+     ));
+
+  Future<void> openDialog2() async{
+    await showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('Delete Event'),
+            children: [
+              ...YourEvents.map((value) {
+                return SimpleDialogOption(child: Text(value.type),onPressed:()=>delete(value),);
+              }),
+              TextButton(onPressed: cancel, child: Text('cancel'))
+            ],
+          );
+        });
+  }
+
+  void cancel(){
+    Navigator.pop(context);
+  }
+ void next(value){
+   Navigator.pop(context);
+   openDialog1(value);
+ }
+ void submit(Event e){
+   Navigator.pop(context);
+   YourEvents.add(e);
+   print(e.date);
+ }
+
+ void delete(value){
+    YourEvents.remove(value);
+    Navigator.pop(context);
+ }
+
+
+
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -82,7 +173,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
         OutlinedButton.icon(
             onPressed: () {
-              Navigator.pushNamed(context, '/Homepage');
+              openDialog();
             },
             icon:Icon(Icons.add),
             label:Text('Add Event',
@@ -103,7 +194,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
         OutlinedButton.icon(
             onPressed: () {
-              Navigator.pushNamed(context, '/Homepage');
+              openDialog2();
             },
             icon:Icon(Icons.delete),
             label:Text('Delete Event',

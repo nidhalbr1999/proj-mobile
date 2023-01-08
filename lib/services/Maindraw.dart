@@ -34,7 +34,7 @@ class MainDrawer extends StatelessWidget {
           height: 20.0,
         ),
         ListTile(
-          onTap: (){},
+          onTap: (){Navigator.pushNamed(context,'/Homepage' );},
           leading: Icon(
             Icons.home,
             color: Colors.black,
@@ -45,7 +45,7 @@ class MainDrawer extends StatelessWidget {
 
         ),
         ListTile(
-          onTap: (){},
+          onTap: (){Navigator.pushNamed(context,'/matchmystyle' );},
           leading: Icon(
             Icons.star_border,
             color: Colors.black,
@@ -56,7 +56,7 @@ class MainDrawer extends StatelessWidget {
 
         ),
         ListTile(
-          onTap: (){},
+          onTap: (){Navigator.pushNamed(context,'/ClothesShop');},
           leading: Icon(
             Icons.shopping_cart,
             color: Colors.black,
@@ -66,7 +66,7 @@ class MainDrawer extends StatelessWidget {
           ),
 
         ),ListTile(
-          onTap: (){},
+          onTap: (){Navigator.pushNamed(context,'/Notifications');},
           leading: Icon(
             Icons.label_important,
             color: Colors.black,
@@ -79,7 +79,7 @@ class MainDrawer extends StatelessWidget {
           ),
 
         ),ListTile(
-          onTap: (){},
+          onTap: (){Navigator.pushNamed(context,'/FavoriteClothes');},
           leading: Icon(
             Icons.favorite,
             color: Colors.black,

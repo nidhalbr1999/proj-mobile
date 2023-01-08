@@ -1,6 +1,9 @@
 
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/services/Item.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 
 
@@ -11,18 +14,40 @@ class wardrobepage extends StatefulWidget {
   State<wardrobepage> createState() => _wardrobepageState();
 }
 
-class _wardrobepageState extends State<wardrobepage> {
+class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderStateMixin {
+
+  Animation<double>? _animation;
+  AnimationController? _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController!);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    super.initState();
+  }
 
   void ShowItems() async{
     Item instance = Item('jacket','Europe/Berlin') ;
     await instance.getData();
   }
 
-  /*@override
-  void initState(){
-    super.initState();
-    ShowItems();
-  }*/
+
+  File? _image;
+
+  final imagePicker=ImagePicker();
+  Future getImage(source) async{
+    final image=await ImagePicker.pickImage(source: source);
+    setState(() {
+      _image=File(image.path);
+    });
+  }
 
   int _selectedIndex = 0;
 
@@ -105,6 +130,46 @@ class _wardrobepageState extends State<wardrobepage> {
                     ]
                     )
             ),
+        /*floatingActionButton:FloatingActionButton(
+          onPressed:() =>getImage(ImageSource.camera),
+          tooltip:'add a new item' ,
+          child: Icon(Icons.camera_alt),
+        ),*/
+        floatingActionButton: FloatingActionBubble(
+          items: <Bubble>[
+            Bubble(
+              title: "camera",
+              iconColor: Colors.white,
+              bubbleColor: Colors.blue,
+              icon: Icons.camera_alt,
+              titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+              onPress: () {
+                _animationController!.reverse();
+                getImage(ImageSource.camera);
+              },
+            ),
+            Bubble(
+              title: "gallery",
+              iconColor: Colors.white,
+              bubbleColor: Colors.blue,
+              icon: Icons.folder,
+              titleStyle: TextStyle(fontSize: 16, color: Colors.white),
+              onPress: () {
+                _animationController!.reverse();
+                getImage(ImageSource.gallery);
+              },
+            ),
+
+          ],
+          animation: _animation!,
+          onPress: () => _animationController!.isCompleted
+              ? _animationController!.reverse()
+              : _animationController!.forward(),
+          backGroundColor: Colors.blue,
+          iconColor: Colors.white,
+          iconData: Icons.add,
+        ),
+
       bottomNavigationBar:BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

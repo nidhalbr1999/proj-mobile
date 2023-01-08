@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 
 class profilepage extends StatefulWidget {
@@ -9,6 +12,18 @@ class profilepage extends StatefulWidget {
 }
 
 class _profilepageState extends State<profilepage> {
+
+
+  File? _image;
+
+  final imagePicker=ImagePicker();
+  Future getImage(source) async{
+    final image=await ImagePicker.pickImage(source: source);
+    setState(() {
+      _image=File(image.path);
+    });
+  }
+
 
   int _selectedIndex = 0;
 
@@ -24,6 +39,8 @@ class _profilepageState extends State<profilepage> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +77,25 @@ class _profilepageState extends State<profilepage> {
               )
           ),
           SizedBox(height:10),
-          CircleAvatar(
-            backgroundImage: AssetImage('assets/user.JPG'),
-            radius: 80,
+          PopupMenuButton(
+              offset: const Offset(70, 60),
+              onSelected: (x){
+                if (x==1) {
+                  getImage(ImageSource.gallery);
+                }
+                else {
+                  getImage(ImageSource.camera);
+                }
+              },
+              child: Center(
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/user.JPG'),
+                    radius: 80,
+                  )),
+              itemBuilder: (context) => [
+                const PopupMenuItem(child: Text('upload picture'),value: 1, ),
+                const PopupMenuItem(child: Text('use camera'),value: 2,),
+              ]
           ),
           SizedBox(height:20),
           OutlinedButton.icon(
@@ -87,7 +120,10 @@ class _profilepageState extends State<profilepage> {
 
           ),
 
+
           ]
+
+
 
     )),
         bottomNavigationBar:BottomNavigationBar(
