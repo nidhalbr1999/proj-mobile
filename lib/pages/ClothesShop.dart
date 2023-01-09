@@ -26,6 +26,7 @@ class _clothesshopState extends State<clothesshop> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 100,
@@ -81,27 +82,6 @@ class _clothesshopState extends State<clothesshop> {
                 ),
               ]
           )
-      ),
-      bottomNavigationBar:BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart,size: 30.0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled,size: 50.0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings,size: 30.0),
-            label: '',
-          )],
-        elevation:40.0,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        backgroundColor: Colors.blueAccent,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
       ),
     );
   }

@@ -9,14 +9,8 @@ class matchmystyle extends StatefulWidget {
 
 class _matchmystyleState extends State<matchmystyle> {
 
-  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    }
-    );
-
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
       case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
@@ -70,23 +64,7 @@ class _matchmystyleState extends State<matchmystyle> {
                       )
                   ),
                   SizedBox(height: 25.0),
-                  TextField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            )),
-                        fillColor: Colors.grey[400],
-                        hintText: 'Search For a Piece',
-                        hintStyle: TextStyle(fontSize: 16)
 
-                    ),
-                    cursorColor: Colors.black,
-                  ),
                   GestureDetector(
                     onTap: () {
 
@@ -143,10 +121,9 @@ class _matchmystyleState extends State<matchmystyle> {
             label: '',
           )],
         elevation:40.0,
-        selectedItemColor: Colors.white,
+        selectedItemColor:Colors.black,
         unselectedItemColor: Colors.black,
         backgroundColor: Colors.blueAccent,
-        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
      );

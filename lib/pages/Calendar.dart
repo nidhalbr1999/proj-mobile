@@ -14,9 +14,9 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
 
 
-  List<String> EventTypes = ['Type1', 'Type2', 'Type3'];
+  List<String> EventTypes = ['Soutenance PFE', 'Cérémonie de mariage', 'Entretien'];
 
-  List<Event> YourEvents = [new Event('1',DateTime.now()),];
+  List<Event> YourEvents = [new Event('1',DateTime.now()),new Event('z',DateTime(2023,1,3,9,0,0),)];
 
   var _time;
 
@@ -59,7 +59,7 @@ class _CalendarPageState extends State<CalendarPage> {
        actions: [
          TextButton(child: Text('cancel'),onPressed: cancel, ),
          TextButton(child: Text('done'),onPressed:()=>
-         {submit(new Event(v,_time))}, )
+         {if (_time!=null){submit(new Event(v,_time),YourEvents)}})
        ],
 
      ));
@@ -87,28 +87,23 @@ class _CalendarPageState extends State<CalendarPage> {
    Navigator.pop(context);
    openDialog1(value);
  }
- void submit(Event e){
+ void submit(Event e,List<Event> l ){
    Navigator.pop(context);
-   YourEvents.add(e);
-   print(e.date);
- }
+    setState(() {
+      l.add(e);
+    });
+  }
 
  void delete(value){
-    YourEvents.remove(value);
+    setState(() {
+      YourEvents.remove(value);
+    });
     Navigator.pop(context);
  }
 
 
-
-
-  int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    }
-    );
-    //Navigator.pushNamed(context,'/Calendar');
+
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
       case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
@@ -167,6 +162,7 @@ class _CalendarPageState extends State<CalendarPage> {
           view: CalendarView.month,
           headerHeight: 70,
           viewHeaderHeight: 30,
+          dataSource: MeetingDataSource(getAppointments(YourEvents)),
 
         ),
         SizedBox(height: 15.0),
@@ -234,12 +230,33 @@ class _CalendarPageState extends State<CalendarPage> {
           label: '',
         )],
           elevation:40.0,
-          selectedItemColor: Colors.white,
+          selectedItemColor: Colors.black,
           unselectedItemColor: Colors.black,
           backgroundColor: Colors.blueAccent,
-          currentIndex: _selectedIndex,
           onTap: _onItemTapped,
         ),
     );
   }
 }
+
+List<Appointment> getAppointments(List<Event> l) {
+  List<Appointment> meetings = <Appointment>[];
+  l.forEach((element) {
+   DateTime date = element.date;
+    meetings.add(Appointment(
+        startTime: date,
+        endTime: date,
+        color: Colors.red,
+        recurrenceRule: 'FREQ=DAILY;COUNT=1',
+        isAllDay: false));
+  });
+  return meetings;
+
+}
+
+class MeetingDataSource extends CalendarDataSource {
+  MeetingDataSource(List<Appointment> source) {
+    appointments = source;
+  }
+}
+

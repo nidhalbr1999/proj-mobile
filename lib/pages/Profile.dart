@@ -25,13 +25,7 @@ class _profilepageState extends State<profilepage> {
   }
 
 
-  int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    }
-    );
 
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -141,10 +135,9 @@ class _profilepageState extends State<profilepage> {
     label: '',
     )],
     elevation:40.0,
-    selectedItemColor: Colors.white,
+    selectedItemColor: Colors.black,
     unselectedItemColor: Colors.black,
     backgroundColor: Colors.blueAccent,
-    currentIndex: _selectedIndex,
     onTap: _onItemTapped,
     ),
     );

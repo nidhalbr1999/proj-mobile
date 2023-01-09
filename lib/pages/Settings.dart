@@ -51,23 +51,7 @@ class _SettingspageState extends State<Settingspage> {
                       )
                   ),
                   SizedBox(height: 25.0),
-                  TextField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        filled: true,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                            )),
-                        fillColor: Colors.grey[400],
-                        hintText: 'Search For a setting...',
-                        hintStyle: TextStyle(fontSize: 16)
 
-                    ),
-                    cursorColor: Colors.black,
-                  ),
                 SizedBox(height: 20.0),
 
                 OutlinedButton.icon(
@@ -93,50 +77,7 @@ class _SettingspageState extends State<Settingspage> {
 
                 ),
                   SizedBox(height: 10.0),
-                  OutlinedButton.icon(
-                      onPressed: () {
-                        Navigator.pushNamed(context,'/Notifications' );
-                      },
-                      icon:Icon(Icons.notifications_active),
-                      label:Text('Notification',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black
-                        ),),
 
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          minimumSize:  Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15), // <-- Radius
-                          ),
-                          side: BorderSide(width: 2.0, color: Colors.black)
-                      )
-
-                  ),
-                  SizedBox(height: 10.0),
-                  OutlinedButton.icon(
-                      onPressed: () {},
-                      icon:Icon(Icons.visibility),
-                      label:Text('Appearence',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black
-                        )),
-
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          minimumSize:  Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15), // <-- Radius
-                          ),
-                          side: BorderSide(width: 2.0, color: Colors.black)
-                      )
-
-                  ),
-                  SizedBox(height: 10.0),
                   OutlinedButton.icon(
                       onPressed: () {},
                       icon:Icon(Icons.lock),
@@ -203,27 +144,7 @@ class _SettingspageState extends State<Settingspage> {
                 ]
             )
         ),
-      bottomNavigationBar:BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart,size: 30.0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled,size: 50.0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings,size: 30.0),
-            label: '',
-          )],
-        elevation:40.0,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        backgroundColor: Colors.blueAccent,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+
     );
   }
 }

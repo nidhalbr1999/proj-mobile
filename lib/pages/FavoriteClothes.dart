@@ -8,14 +8,8 @@ class myfavoriteclothes extends StatefulWidget {
 
 class _myfavoriteclothesState extends State<myfavoriteclothes> {
 
-  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    }
-    );
-
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
       case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
@@ -105,10 +99,9 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
             label: '',
           )],
         elevation:40.0,
-        selectedItemColor: Colors.white,
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
         backgroundColor: Colors.blueAccent,
-        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
     );

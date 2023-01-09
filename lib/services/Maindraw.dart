@@ -66,19 +66,6 @@ class MainDrawer extends StatelessWidget {
           ),
 
         ),ListTile(
-          onTap: (){Navigator.pushNamed(context,'/Notifications');},
-          leading: Icon(
-            Icons.label_important,
-            color: Colors.black,
-          ),
-          trailing: Text(
-              "99+"
-          ),
-          title:Text(
-              'Notifications'
-          ),
-
-        ),ListTile(
           onTap: (){Navigator.pushNamed(context,'/FavoriteClothes');},
           leading: Icon(
             Icons.favorite,

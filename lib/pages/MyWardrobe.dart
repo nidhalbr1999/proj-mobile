@@ -49,13 +49,8 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
     });
   }
 
-  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    }
-    );
 
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -66,6 +61,7 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 100,
@@ -126,7 +122,142 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
 
                     ),
                   cursorColor: Colors.black,
+                    ), Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Column(
+                      children: <Widget> [
+                        const Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context,'/tops' );
+                          },
+                          child:Container(
+                            decoration: BoxDecoration (
+                              boxShadow: const [
+                                BoxShadow (
+                                  color:Colors.black12,
+                                  blurRadius: 5.0,
+                                  blurStyle: BlurStyle.normal,
+                                ) ],
+                              borderRadius: BorderRadius.circular(15),
+                              image:const DecorationImage(
+                                  image:AssetImage('assets/pull.jpg'),
+                                  fit:BoxFit.cover
+                              ),
+                            ),
+                            width:120,
+                            height: 120,
+                          ),
+                        ),
+                        const Text ('Tops',
+                          style:TextStyle(fontSize:22,letterSpacing:2.0, fontWeight:FontWeight.w400 ,color:Colors.pink),
+                          textAlign: TextAlign.center,
+                        ),
+                      ]
+                  ),
+                  Column(
+                      children:<Widget> [
+                        Padding ( padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context,'/bottoms');
+                          },
+                          child:Container(
+                            decoration: BoxDecoration (
+                              boxShadow: const [
+                                BoxShadow (
+                                  color:Colors.black12,
+                                  blurRadius: 5.0,
+                                  blurStyle: BlurStyle.normal,
+                                ) ],
+                              borderRadius: BorderRadius.circular(15),
+                              image: const DecorationImage (
+                                image:AssetImage('assets/bottoms.jpg'),
+                                fit:BoxFit.cover,
+                              ),
+                            ),
+                            width: 120,
+                            height:120,
+
+                          ),
+                        ),
+                        const Text ('Bottoms',
+                          style:TextStyle(fontSize:22,letterSpacing:2.0,fontWeight:FontWeight.w400 ,color:Colors.pink),
+                          textAlign: TextAlign.center,
+                        ),
+                      ]
+                  ),
+                ],
+              ),
+
+              Row (
+                  mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                  children:<Widget>[
+
+                    Column(
+                        children: <Widget> [
+                          Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
+                          GestureDetector(
+                            onTap:(){
+                              Navigator.pushNamed(context,'/Shoes');
+                            },
+                            child:Container(
+                                decoration: BoxDecoration (
+                                  boxShadow: const [
+                                    BoxShadow (
+                                      color:Colors.black12,
+                                      blurRadius: 5.0,
+                                      blurStyle: BlurStyle.normal,
+                                    ) ],
+                                  borderRadius: BorderRadius.circular(15),
+                                  image:const DecorationImage(
+                                    image:AssetImage('assets/whitesneakers.webp'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                width: 120,
+                                height:120
+                            ),
+                          ),
+                          const Text ('Shoes',
+                            style:TextStyle(fontSize:22,letterSpacing:2.0, fontWeight:FontWeight.w400,color:Colors.pink),
+                            textAlign: TextAlign.center,
+                          ),
+                        ]
                     ),
+                    Column(
+                        children: <Widget> [
+                          Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
+                          GestureDetector(
+                            onTap:() {
+                              Navigator.pushNamed(context,'/Jackets');
+                            },
+                            child:Container(
+                                decoration: BoxDecoration (
+                                  boxShadow: const [
+                                    BoxShadow (
+                                      color:Colors.black12,
+                                      blurRadius: 5.0,
+                                      blurStyle: BlurStyle.normal,
+                                    ) ],
+                                  borderRadius: BorderRadius.circular(15),
+                                  image:const DecorationImage(
+                                      image:AssetImage('assets/vestes.jpg'),
+                                      fit: BoxFit.cover),
+                                ),
+                                width: 120,
+                                height:120
+                            ),
+                          ),
+                          const Text ('Jackets',
+                            style:TextStyle(fontSize:22,letterSpacing:2.0, fontWeight:FontWeight.w400 ,color:Colors.pink),
+                            textAlign: TextAlign.center,
+                          ),
+                        ]
+                    ),
+                  ]
+              )
                     ]
                     )
             ),
@@ -185,10 +316,9 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
             label: '',
           )],
         elevation:40.0,
-        selectedItemColor: Colors.white,
+        selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
         backgroundColor: Colors.blueAccent,
-        currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
     );

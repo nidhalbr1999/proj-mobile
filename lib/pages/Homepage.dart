@@ -72,23 +72,7 @@ class _FirstPageState extends State<FirstPage> {
                     )
                 ),
                 SizedBox(height: 20.0),
-                TextField(
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      filled: true,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
-                          )),
-                      fillColor: Colors.grey[400],
-                      hintText: 'Search For a Piece',
-                      hintStyle: TextStyle(fontSize: 16)
 
-                  ),
-                  cursorColor: Colors.black,
-                ),
                 SizedBox(height: 10.0),
                 Row(
                     children: <Widget>[
@@ -145,27 +129,7 @@ class _FirstPageState extends State<FirstPage> {
               ]
           )
       ),
-      bottomNavigationBar:BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart,size: 30.0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled,size: 50.0),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings,size: 30.0),
-            label: '',
-          )],
-        elevation:40.0,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black,
-        backgroundColor: Colors.blueAccent,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+
     );
   }
 }
