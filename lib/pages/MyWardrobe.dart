@@ -106,23 +106,7 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
                   )
                   ),
                   SizedBox(height: 25.0),
-                  TextField(
-                  decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                  width: 0,
-                    style: BorderStyle.none,
-                    )),
-                    fillColor: Colors.grey[400],
-                    hintText: 'Search For a Piece',
-                    hintStyle: TextStyle(fontSize: 16)
-
-                    ),
-                  cursorColor: Colors.black,
-                    ), Row(
+                   Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Column(
@@ -130,7 +114,7 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
                         const Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context,'/tops' );
+                            Navigator.pushNamed(context,'/Tops' );
                           },
                           child:Container(
                             decoration: BoxDecoration (
@@ -161,7 +145,7 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
                         Padding ( padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context,'/bottoms');
+                            Navigator.pushNamed(context,'/Bottoms');
                           },
                           child:Container(
                             decoration: BoxDecoration (

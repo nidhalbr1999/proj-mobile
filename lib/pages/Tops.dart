@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 
 
-class myfavoriteclothes extends StatefulWidget {
+class Tops extends StatefulWidget {
+  const Tops({Key? key}) : super(key: key);
 
   @override
-  State<myfavoriteclothes> createState() => _myfavoriteclothesState();
+  State<Tops> createState() => _TopsState();
 }
 
-class _myfavoriteclothesState extends State<myfavoriteclothes> {
-
+class _TopsState extends State<Tops> {
 
   void _onItemTapped(int index) {
     switch(index){
@@ -30,7 +30,6 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
     Image.asset('Images/S2.png'),
     //Image.asset('Images/S2.png'),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +43,11 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
         actions: [IconButton(onPressed: (){
           Navigator.pushNamed(context,'/Profile' );
         },
-            icon:
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
-              radius: 30,
-            ),
+          icon:
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/user.JPG'),
+            radius: 30,
+          ),
           iconSize: 60,
         )],
         elevation: 0.0,

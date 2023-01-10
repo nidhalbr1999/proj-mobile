@@ -16,6 +16,8 @@ class _profilepageState extends State<profilepage> {
 
   File? _image;
 
+  bool showPassword = false;
+
   final imagePicker=ImagePicker();
   Future getImage(source) async{
     final image=await ImagePicker.pickImage(source: source);
@@ -39,6 +41,7 @@ class _profilepageState extends State<profilepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
         toolbarHeight: 100,
@@ -62,11 +65,11 @@ class _profilepageState extends State<profilepage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-              'User Name',
+              'Edit Profile',
               style:TextStyle(
                   color:Colors.black,
                   letterSpacing: 2.0,
-                  fontSize: 40.0,
+                  fontSize: 35.0,
                   fontWeight: FontWeight.bold
               )
           ),
@@ -91,7 +94,11 @@ class _profilepageState extends State<profilepage> {
                 const PopupMenuItem(child: Text('use camera'),value: 2,),
               ]
           ),
-          SizedBox(height:20),
+          SizedBox( height: 30),
+
+          buildTextField("Full Name", "Dor Alex", true),
+          buildTextField("E-mail", "alexd@gmail.com", false),
+          buildTextField("Password", "***********", true),
           OutlinedButton.icon(
               onPressed: () {
                 Navigator.pushNamed(context,'/Login' );
@@ -142,4 +149,37 @@ class _profilepageState extends State<profilepage> {
     ),
     );
   }
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 35.0),
+      child: TextField(
+        obscureText: isPasswordTextField ? showPassword : false,
+        decoration: InputDecoration(
+            suffixIcon: isPasswordTextField
+                ? IconButton(
+              onPressed: () {
+                setState(() {
+                  showPassword = !showPassword;
+                });
+              },
+              icon: Icon(
+                Icons.remove_red_eye,
+                color: Colors.grey,
+              ),
+            )
+                : null,
+            contentPadding: EdgeInsets.only(bottom: 3),
+            labelText: labelText,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
+      ),
+    );
+  }
+
 }

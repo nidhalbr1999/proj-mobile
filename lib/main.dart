@@ -14,6 +14,10 @@ import 'package:project1/pages/MyWardrobe.dart';
 import 'package:project1/pages/Profile.dart';
 import 'package:project1/pages/Forgot.dart';
 import 'package:project1/pages/Mainpage.dart';
+import 'package:project1/pages/Tops.dart';
+import 'package:project1/pages/Bottoms.dart';
+import 'package:project1/pages/Shoes.dart';
+import 'package:project1/pages/Jackets.dart';
 
 
 
@@ -33,6 +37,10 @@ void main() {
       '/Signup': (context)=> SignupPage(),
       '/Login': (context)=> LoginPage(),
       '/Forgot': (context)=>Forgotpage(),
+      '/Tops': (context)=>const Tops(),
+      '/Bottoms': (context)=>const Bottoms(),
+      '/Shoes': (context)=>const Shoes(),
+      '/Jackets': (context)=>const Jackets(),
 
     }
   ));

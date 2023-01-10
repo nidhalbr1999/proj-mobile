@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
 
 
-class myfavoriteclothes extends StatefulWidget {
+class Bottoms extends StatefulWidget {
+  const Bottoms({Key? key}) : super(key: key);
 
   @override
-  State<myfavoriteclothes> createState() => _myfavoriteclothesState();
+  State<Bottoms> createState() => _BottomsState();
 }
 
-class _myfavoriteclothesState extends State<myfavoriteclothes> {
-
+class _BottomsState extends State<Bottoms> {
 
   void _onItemTapped(int index) {
     switch(index){
@@ -30,7 +29,6 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
     Image.asset('Images/S2.png'),
     //Image.asset('Images/S2.png'),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +42,11 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
         actions: [IconButton(onPressed: (){
           Navigator.pushNamed(context,'/Profile' );
         },
-            icon:
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
-              radius: 30,
-            ),
+          icon:
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/user.JPG'),
+            radius: 30,
+          ),
           iconSize: 60,
         )],
         elevation: 0.0,
@@ -60,20 +58,11 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'My Favorite',
+                    'Bottoms',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,
                         fontSize: 40.0,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
-                Text(
-                    'Clothes',
-                    style:TextStyle(
-                        color:Colors.black,
-                        letterSpacing: 2.0,
-                        fontSize: 60.0,
                         fontWeight: FontWeight.bold
                     )
                 ),
