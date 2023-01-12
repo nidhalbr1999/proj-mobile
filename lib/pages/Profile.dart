@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project1/pages/Homepage.dart';
 
 
 class profilepage extends StatefulWidget {
@@ -49,13 +50,6 @@ class _profilepageState extends State<profilepage> {
         leading:IconButton(onPressed: (){
           Navigator.pop(context);
         }, icon:Icon(Icons.arrow_back_ios)),
-        /*actions: [IconButton(onPressed: (){},
-            icon:
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
-              radius: 30,
-            )
-        )],*/
         elevation: 0.0,
 
       ),
@@ -86,7 +80,7 @@ class _profilepageState extends State<profilepage> {
               },
               child: Center(
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/user.JPG'),
+                    backgroundImage: AssetImage('assets/userpic.jpg'),
                     radius: 80,
                   )),
               itemBuilder: (context) => [
@@ -96,8 +90,8 @@ class _profilepageState extends State<profilepage> {
           ),
           SizedBox( height: 30),
 
-          buildTextField("Full Name", "Dor Alex", true),
-          buildTextField("E-mail", "alexd@gmail.com", false),
+          buildTextField("Full Name", responseMap["username"], false),
+          buildTextField("E-mail", responseMap["email"], false),
           buildTextField("Password", "***********", true),
           OutlinedButton.icon(
               onPressed: () {

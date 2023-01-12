@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project1/services/Maindraw.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Map responseMap=Map();
 
 class FirstPage extends StatefulWidget {
 
@@ -24,6 +29,11 @@ class _FirstPageState extends State<FirstPage> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
+  void pressToGet(String apiUrl,Map map)async{
+    http.Response res= await AuthServices.getData(apiUrl);
+    setState(() { map = jsonDecode(res.body);});
+    print(res.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +42,8 @@ class _FirstPageState extends State<FirstPage> {
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.blueAccent,
-        /*leading:IconButton(onPressed: (){
-        }, icon:Icon(Icons.menu)),*/
-        actions: [IconButton(onPressed: (){
+        actions: [IconButton(onPressed: ()async{
+          pressToGet('User/2',responseMap);
           Navigator.pushNamed(context,'/Profile' );
         },
             icon:

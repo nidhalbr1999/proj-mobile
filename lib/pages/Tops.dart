@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:project1/pages/MyWardrobe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class Tops extends StatefulWidget {
@@ -10,6 +13,7 @@ class Tops extends StatefulWidget {
 }
 
 class _TopsState extends State<Tops> {
+
 
   void _onItemTapped(int index) {
     switch(index){
@@ -59,7 +63,7 @@ class _TopsState extends State<Tops> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'My Favorite',
+                    'Tops',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,
@@ -67,26 +71,17 @@ class _TopsState extends State<Tops> {
                         fontWeight: FontWeight.bold
                     )
                 ),
-                Text(
-                    'Clothes',
-                    style:TextStyle(
-                        color:Colors.black,
-                        letterSpacing: 2.0,
-                        fontSize: 60.0,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
+
 
                 SizedBox(height: 50,width: 0,),
-                for (int i=0;i<imgList.length;i+=2)
-                  Center(
-                    child:Row(children: [SizedBox(height: 0,width: 50,),
-                      Container(width: 100, height: 100, child:imgList[i]),
+                for (int i=0;i<responseList.length;i++)
+                  Column(
+                    children:[
+                      Container(width: 100, height: 100, child:Image.network('http://10.0.2.2:8000/'+responseList[i]["image"].substring(3))),
                       SizedBox(height: 0,width: 30,),
-                      Container(width: 100, height: 100, child: imgList[i+1]),
                     ],),
 
-                  ),
+
                 SizedBox(height: 50,width: 0,),
               ]
           )

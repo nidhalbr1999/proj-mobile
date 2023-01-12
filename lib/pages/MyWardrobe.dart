@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:project1/services/Item.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-
+List responseList=[];
 
 class wardrobepage extends StatefulWidget {
 
@@ -57,7 +60,14 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
     case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
     case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
+
   }
+
+void pressToGet(String apiUrl,List list)async{
+  http.Response res= await AuthServices.getData(apiUrl);
+  setState(() { list = jsonDecode(res.body);});
+  print(res.body);
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +123,8 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
                       children: <Widget> [
                         const Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async{
+                           pressToGet('clothes/?user_id=1&skip=0&limit=100',responseList);
                             Navigator.pushNamed(context,'/Tops' );
                           },
                           child:Container(

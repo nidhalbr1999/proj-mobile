@@ -18,12 +18,13 @@ import 'package:project1/pages/Tops.dart';
 import 'package:project1/pages/Bottoms.dart';
 import 'package:project1/pages/Shoes.dart';
 import 'package:project1/pages/Jackets.dart';
-
+import 'package:project1/pages/loginy.dart';
+import 'package:project1/pages/regscreen.dart';
 
 
 void main() {
   runApp(MaterialApp(
-    home:LoginPage(),
+    home:RegisterScreen(),
     routes: {
       '/Homepage': (context) => const MainpageState(),
       '/Calendar': (context) => CalendarPage(),
