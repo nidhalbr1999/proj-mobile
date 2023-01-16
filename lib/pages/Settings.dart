@@ -37,10 +37,11 @@ class _SettingspageState extends State<Settingspage> {
 
         ),
         body: Padding(
-            padding: EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+            padding: EdgeInsets.fromLTRB(0.0, 40.0, 0.0, 0.0),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  SizedBox(height: 55.0),
                   Text(
                       'Settings',
                       style: TextStyle(
@@ -50,9 +51,8 @@ class _SettingspageState extends State<Settingspage> {
                           fontWeight: FontWeight.bold
                       )
                   ),
-                  SizedBox(height: 25.0),
-
-                SizedBox(height: 20.0),
+                  SizedBox(height: 30.0),
+                  SizedBox(height: 85.0),
 
                 OutlinedButton.icon(
                     onPressed: () {
@@ -68,15 +68,12 @@ class _SettingspageState extends State<Settingspage> {
 
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  minimumSize:  Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15), // <-- Radius
-                    ),
-                    side: BorderSide(width: 2.0, color: Colors.black)
+                  minimumSize:  Size.fromHeight(70),
+                  alignment: Alignment.centerLeft,
+
                 )
 
                 ),
-                  SizedBox(height: 10.0),
 
                   OutlinedButton.icon(
                       onPressed: () {},
@@ -90,15 +87,12 @@ class _SettingspageState extends State<Settingspage> {
 
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          minimumSize:  Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15), // <-- Radius
-                          ),
-                          side: BorderSide(width: 2.0, color: Colors.black)
+                          minimumSize:  Size.fromHeight(70),
+                        alignment: Alignment.centerLeft,
                       )
 
                   ),
-                  SizedBox(height: 10.0),
+
                   OutlinedButton.icon(
                       onPressed: () {},
                       icon:Icon(Icons.help),
@@ -111,15 +105,12 @@ class _SettingspageState extends State<Settingspage> {
 
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          minimumSize:  Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15), // <-- Radius
-                          ),
-                          side: BorderSide(width: 2.0, color: Colors.black)
+                          minimumSize:  Size.fromHeight(70),
+                        alignment: Alignment.centerLeft,
                       )
 
                   ),
-                  SizedBox(height: 10.0),
+
                   OutlinedButton.icon(
                       onPressed: () {},
                       icon:Icon(Icons.chat_outlined),
@@ -133,11 +124,8 @@ class _SettingspageState extends State<Settingspage> {
 
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
-                          minimumSize:  Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15), // <-- Radius
-                          ),
-                          side: BorderSide(width: 2.0, color: Colors.black)
+                          minimumSize:  Size.fromHeight(70),
+                        alignment: Alignment.centerLeft,
                       )
 
                   )

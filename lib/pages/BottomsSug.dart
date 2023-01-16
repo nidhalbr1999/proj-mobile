@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:project1/pages/MyWardrobe.dart';
 import 'package:project1/api/auth_services.dart';
 import 'package:project1/pages/LoginPage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+List outfitlist2=[];
 
-class Shoes extends StatefulWidget {
-  const Shoes({Key? key}) : super(key: key);
+class BottomsSug extends StatefulWidget {
+  const BottomsSug({Key? key}) : super(key: key);
 
   @override
-  State<Shoes> createState() => _ShoesState();
+  State<BottomsSug> createState() => _BottomsSugState();
 }
 
-class _ShoesState extends State<Shoes> {
+class _BottomsSugState extends State<BottomsSug> {
+
   void _onItemTapped(int index) {
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -20,6 +24,23 @@ class _ShoesState extends State<Shoes> {
     }
   }
 
+  Future<List> getOutfit(String apiurl) async{
+    http.Response res= await AuthServices.getData(apiurl);
+    if (jsonDecode(res.body)is Map){
+      return [];
+    }else{
+      return jsonDecode(res.body);}
+  }
+  Future openDialog() => showDialog(context: context,
+      builder: (content)=>AlertDialog(
+        title:Text('Sorry'),
+        content: Text('we didnt find an outfit for you, update your wardrobe and try again'),
+        actions: [
+          TextButton(child: Text('done'),onPressed:()=>
+              Navigator.pop(context))
+        ],
+
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +72,7 @@ class _ShoesState extends State<Shoes> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'Shoes',
+                    'Bottoms',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,
@@ -64,11 +85,25 @@ class _ShoesState extends State<Shoes> {
                 Wrap(
                   children: <Widget>[
                     for (int i=0;i<responseList.length;i++)
-                      Container(width: 150, height: 150, child:Image.network(serverurl+responseList[i]["image"].substring(3))),
+                      Container(width: 150, height: 150, child:GestureDetector(
+                         child: Image.network(serverurl+responseList[i]["image"].substring(3)),
+                        onTap: ()async{
+                        outfitlist2=await getOutfit('clothes/outfit/?image_path=${responseList[i]["image"]}');
+                        if (outfitlist2.isNotEmpty) {
+                          print(outfitlist2);
+                         Navigator.pushNamed(context, '/Outfit');
+                        }else{
+                        openDialog();
+                           }
+    }
+
+                      ),
+                      ),
                   ],
                   runSpacing: 8.0,
                   textDirection: TextDirection.ltr,
                 ),
+
                 SizedBox(height: 50,width: 0,),
               ]
           )
@@ -96,3 +131,4 @@ class _ShoesState extends State<Shoes> {
     );
   }
 }
+

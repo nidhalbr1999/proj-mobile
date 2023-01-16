@@ -4,14 +4,15 @@ import 'package:project1/api/auth_services.dart';
 import 'package:project1/pages/LoginPage.dart';
 
 
-class Shoes extends StatefulWidget {
-  const Shoes({Key? key}) : super(key: key);
+class ShoesSug extends StatefulWidget {
+  const ShoesSug({Key? key}) : super(key: key);
 
   @override
-  State<Shoes> createState() => _ShoesState();
+  State<ShoesSug> createState() => _ShoesSugState();
 }
 
-class _ShoesState extends State<Shoes> {
+class _ShoesSugState extends State<ShoesSug> {
+
   void _onItemTapped(int index) {
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -19,7 +20,6 @@ class _ShoesState extends State<Shoes> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,3 +96,4 @@ class _ShoesState extends State<Shoes> {
     );
   }
 }
+

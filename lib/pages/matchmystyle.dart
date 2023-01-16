@@ -1,5 +1,12 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:http/http.dart' as http;
+import 'package:project1/pages/LoginPage.dart';
+
+
+List outfitlist=[];
 
 class matchmystyle extends StatefulWidget {
 
@@ -17,6 +24,24 @@ class _matchmystyleState extends State<matchmystyle> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
+
+  Future<List> getFullOutfit(String apiurl) async{
+    http.Response res= await AuthServices.getData(apiurl);
+    if (jsonDecode(res.body)is Map){
+      return [];
+    }else{
+    return jsonDecode(res.body);}
+  }
+  Future openDialog() => showDialog(context: context,
+      builder: (content)=>AlertDialog(
+        title:Text('Sorry'),
+        content: Text('we didnt find an outfit for you, update your wardrobe and try again'),
+        actions: [
+          TextButton(child: Text('done'),onPressed:()=>
+              Navigator.pop(context))
+        ],
+
+      ));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +57,8 @@ class _matchmystyleState extends State<matchmystyle> {
       },
       icon:
       CircleAvatar(
-      backgroundImage: AssetImage('assets/user.JPG'),
+      backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+        backgroundColor: Colors.transparent,
       radius: 30,
     ),
         iconSize: 60,
@@ -68,6 +94,8 @@ class _matchmystyleState extends State<matchmystyle> {
                   GestureDetector(
                     onTap: () {
 
+                      Navigator.pushNamed(context,'/Mywarderobesug' );
+
                     },
                     child: Image.asset(
                       'assets/pic1.JPG',
@@ -76,23 +104,16 @@ class _matchmystyleState extends State<matchmystyle> {
                     ),
                   ),
                   SizedBox(height: 10.0),
-                  Row(
-                      children: <Widget>[
-                        SizedBox(width: 10.0),
-                        GestureDetector(
-                          onTap: () {
 
-                          },
-                          child: Image.asset(
-                            'assets/pic3.JPG',
-                            width: 150.0,
-                            height: 150.0,
-                          ),
-                        ),
-                        SizedBox(width: 10.0),
-                        GestureDetector(
-                          onTap: () {
 
+                        GestureDetector(
+                          onTap: () async{
+                            outfitlist=await getFullOutfit('clothes/suggest/');
+                            if (outfitlist.isNotEmpty) {
+                              Navigator.pushNamed(context, '/FullOutfit');
+                            }else{
+                              openDialog();
+                            }
                           },
                           child: Image.asset(
                             'assets/pic2.JPG',
@@ -100,8 +121,6 @@ class _matchmystyleState extends State<matchmystyle> {
                             height: 150.0,
                           ),
                         ),
-                      ]
-                  ),
 
                 ]
             )

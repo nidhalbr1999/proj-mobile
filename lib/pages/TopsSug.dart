@@ -1,15 +1,18 @@
-
 import 'package:flutter/material.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:project1/pages/MyWardrobe.dart';
+
+import 'package:project1/pages/LoginPage.dart';
 
 
-class myfavoriteclothes extends StatefulWidget {
+class Topssug extends StatefulWidget {
+  const Topssug({Key? key}) : super(key: key);
 
   @override
-  State<myfavoriteclothes> createState() => _myfavoriteclothesState();
+  State<Topssug> createState() => _TopssugState();
 }
 
-class _myfavoriteclothesState extends State<myfavoriteclothes> {
-
+class _TopssugState extends State<Topssug> {
 
   void _onItemTapped(int index) {
     switch(index){
@@ -18,18 +21,6 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
-
-  List imgList = [
-    Image.asset('Images/S1.png'),
-    Image.asset('Images/S3.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    //Image.asset('Images/S2.png'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +35,12 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
         actions: [IconButton(onPressed: (){
           Navigator.pushNamed(context,'/Profile' );
         },
-            icon:
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
-              radius: 30,
-            ),
+          icon:
+          CircleAvatar(
+            backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+            backgroundColor: Colors.transparent,
+            radius: 30,
+          ),
           iconSize: 60,
         )],
         elevation: 0.0,
@@ -60,7 +52,7 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'My Favorite',
+                    'Tops',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,
@@ -68,26 +60,18 @@ class _myfavoriteclothesState extends State<myfavoriteclothes> {
                         fontWeight: FontWeight.bold
                     )
                 ),
-                Text(
-                    'Clothes',
-                    style:TextStyle(
-                        color:Colors.black,
-                        letterSpacing: 2.0,
-                        fontSize: 60.0,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
+
 
                 SizedBox(height: 50,width: 0,),
-                for (int i=0;i<imgList.length;i+=2)
-                  Center(
-                    child:Row(children: [SizedBox(height: 0,width: 50,),
-                      Container(width: 100, height: 100, child:imgList[i]),
-                      SizedBox(height: 0,width: 30,),
-                      Container(width: 100, height: 100, child: imgList[i+1]),
-                    ],),
+                Wrap(
+                  children: <Widget>[
+                    for (int i=0;i<responseList.length;i++)
+                      Container(width: 150, height: 150, child:Image.network(serverurl+responseList[i]["image"].substring(3))),
+                  ],
+                  runSpacing: 8.0,
+                  textDirection: TextDirection.ltr,
+                ),
 
-                  ),
                 SizedBox(height: 50,width: 0,),
               ]
           )

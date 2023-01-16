@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:project1/pages/MyWardrobe.dart';
 import 'package:project1/api/auth_services.dart';
+import 'package:project1/pages/matchmystyle.dart';
 import 'package:project1/pages/LoginPage.dart';
+import 'package:project1/pages/BottomsSug.dart';
+import 'package:project1/pages/TopsSug.dart';
+import 'package:project1/pages/JacketsSug.dart';
+import 'package:project1/pages/ShoesSug.dart';
 
 
-class Shoes extends StatefulWidget {
-  const Shoes({Key? key}) : super(key: key);
+
+class outfitSug extends StatefulWidget {
+  const outfitSug({Key? key}) : super(key: key);
 
   @override
-  State<Shoes> createState() => _ShoesState();
+  State<outfitSug> createState() => _outfitSugState();
 }
 
-class _ShoesState extends State<Shoes> {
+class _outfitSugState extends State<outfitSug> {
+
   void _onItemTapped(int index) {
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -19,7 +25,6 @@ class _ShoesState extends State<Shoes> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +56,7 @@ class _ShoesState extends State<Shoes> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'Shoes',
+                    'Outfit',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,
@@ -60,15 +65,19 @@ class _ShoesState extends State<Shoes> {
                     )
                 ),
 
+
                 SizedBox(height: 50,width: 0,),
                 Wrap(
                   children: <Widget>[
-                    for (int i=0;i<responseList.length;i++)
-                      Container(width: 150, height: 150, child:Image.network(serverurl+responseList[i]["image"].substring(3))),
+                    for (int i=0;i<outfitlist2.length;i++)
+                      Container(width: 150, height: 150, child:Image.network(serverurl+outfitlist2[i]["image"].substring(3))),
                   ],
                   runSpacing: 8.0,
                   textDirection: TextDirection.ltr,
                 ),
+
+
+
                 SizedBox(height: 50,width: 0,),
               ]
           )

@@ -65,17 +65,6 @@ class MainDrawer extends StatelessWidget {
               'Shop'
           ),
 
-        ),ListTile(
-          onTap: (){Navigator.pushNamed(context,'/FavoriteClothes');},
-          leading: Icon(
-            Icons.favorite,
-            color: Colors.black,
-          ),
-          title:Text(
-              'My Favorite'
-          ),
-
-
         )
       ],
     );

@@ -1,9 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:project1/models/loginmodel.dart';
-import 'package:project1/api/api_service.dart';
 import 'package:wc_form_validators/wc_form_validators.dart';
 
+import 'package:project1/pages/Mainpage.dart';
+import 'package:http/http.dart' as http;
+import 'package:project1/api/auth_services.dart';
+import 'package:project1/api/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+int id=0;
+Map<dynamic,dynamic> responseMap=Map();
 
 
 class LoginPage extends StatefulWidget {
@@ -18,25 +25,48 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  /*bool hidePassword = true;
-  bool isApiCallProcess = false;
-  GlobalKey<FormState> globalFormKey = GlobalKey<FormState>();
-  late LoginRequestModel loginRequestModel;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  @override
-  void initState() {
-    super.initState();
-    loginRequestModel = new LoginRequestModel('','');
-  }*/
+  String _email = '';
+  String _password = '';
 
-  /*bool validateAndSave() {
-    final form = globalFormKey.currentState;
-    if (form.validate()) {
-      form.save();
-      return true;
+  bool isLoading=true;
+
+  Future<Map<dynamic,dynamic>> pressToGetMap (String apiUrl)async{
+    Map<dynamic,dynamic> map=Map();
+    http.Response res= await AuthServices.getData(apiUrl);
+    setState(() { map = jsonDecode(res.body);});
+    return map;
+  }
+
+  Future<int> getid(String urlapi)async{
+    http.Response res= await AuthServices.getData(urlapi);
+    print(res.body);
+    return int.parse(res.body);
+  }
+
+
+  loginPressed() async {
+    if (_email.isNotEmpty && _password.isNotEmpty) {
+      http.Response response = await AuthServices.login(_email, _password);
+      Map responseMap = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('token', responseMap["access_token"]);
+        localStorage.setString('email', _email);
+
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const MainpageState(),
+            ));
+      } else {
+        errorSnackBar(context, responseMap.values.first);
+      }
+    } else {
+      errorSnackBar(context, 'enter all required fields');
     }
-    return false;
-  }*/
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,11 +105,16 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold
                           )),
-                      SizedBox(height: 50.0),
+                      SizedBox(height: 70.0),
                       TextFormField(
-                       /* onSaved: (input) =>
-                loginRequestModel.email = input,*/
+                        onChanged: (value) {
+                          _email = value;
+                        },
                         controller: email,
+                        validator: Validators.compose([
+                          Validators.required('email is required'),
+                          Validators.email('invalid email address')
+                        ]),
                         decoration: InputDecoration(
                           filled: false,
                           border: OutlineInputBorder(
@@ -98,17 +133,16 @@ class _LoginPageState extends State<LoginPage> {
 
                         ),
                         cursorColor: Colors.blue,
-                        validator: Validators.compose([
-                          Validators.required('email is required'),
-                          Validators.email('invalid email address')
-                        ]),
+
                       ),
                       SizedBox(height:30.0 ),
                       TextFormField(
-                        /*validator: (value) =>
-                            Validator.validateEmail(value ?? ""),
-                        controller: emailControlle,*/
+                        onChanged: (value) {
+                          _password = value;
+                        },
                         controller: password,
+                        validator: Validators.compose(
+                            [Validators.required('password is required'),]),
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: false,
@@ -128,50 +162,23 @@ class _LoginPageState extends State<LoginPage> {
 
                         ),
                         cursorColor: Colors.blue,
-                        validator: Validators.compose(
-                            [Validators.required('password is required'),]),
+
                       ),
-                      SizedBox(height:50.0 ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/Forgot');
-                        },
-                        child: Text('Forget Password?',style:TextStyle(fontSize: 18.0, )),
-                      ),
-                      SizedBox(height:50.0 ),
+
+
+                      SizedBox(height:70.0 ),
                       OutlinedButton.icon(
-                          onPressed: () {
+                          onPressed: ()async {
                             if (_formKey.currentState!.validate()) {
-                              print(email.text);
-                              print(password.text);
-                              print('success');
+                              loginPressed();
+                              id=await getid('User/user_id');
+                              print(id);
+                              responseMap=await pressToGetMap('User/{$id}');
                             }
-                            //Navigator.pushNamed(context, '/Homepage');
-        /*if (validateAndSave()) {
-    print(loginRequestModel.toJson());
-
-    setState(() {
-    isApiCallProcess = true;
-    });
-
-    APIService apiService = new APIService();
-    apiService.login(loginRequestModel).then((value) {
-    if (value != null) {
-    setState(() {
-    isApiCallProcess = false;
-    });
-
-    if (value.token.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Successful")));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.error)));
-    }
-    }
-    });
-        }*/
                           },
-                          icon:Icon(Icons.login),
-                          label:Text('Login',
+                          icon: Icon(Icons.login),
+                          label:
+                          Text('Login',
                               style: TextStyle(
                                   fontSize: 24,
                                   color: Colors.black

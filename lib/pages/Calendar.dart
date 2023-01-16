@@ -1,9 +1,13 @@
-//import 'dart:js';
 
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:project1/services/EventClass.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:project1/pages/LoginPage.dart';
+import 'package:project1/pages/Homepage.dart';
 
 class CalendarPage extends StatefulWidget {
 
@@ -16,7 +20,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   List<String> EventTypes = ['Soutenance PFE', 'Cérémonie de mariage', 'Entretien'];
 
-  List<Event> YourEvents = [new Event('1',DateTime.now()),new Event('z',DateTime(2023,1,3,9,0,0),)];
+
 
   var _time;
 
@@ -59,7 +63,7 @@ class _CalendarPageState extends State<CalendarPage> {
        actions: [
          TextButton(child: Text('cancel'),onPressed: cancel, ),
          TextButton(child: Text('done'),onPressed:()=>
-         {if (_time!=null){submit(new Event(v,_time),YourEvents)}})
+         {if (_time!=null){submit(new Event(v,_time,1),YourEvents)}})
        ],
 
      ));
@@ -72,7 +76,7 @@ class _CalendarPageState extends State<CalendarPage> {
             title: const Text('Delete Event'),
             children: [
               ...YourEvents.map((value) {
-                return SimpleDialogOption(child: Text(value.type),onPressed:()=>delete(value),);
+                return SimpleDialogOption(child: Text(value.name),onPressed:()=>delete(value),);
               }),
               TextButton(onPressed: cancel, child: Text('cancel'))
             ],
@@ -87,23 +91,34 @@ class _CalendarPageState extends State<CalendarPage> {
    Navigator.pop(context);
    openDialog1(value);
  }
- void submit(Event e,List<Event> l ){
+ void submit(Event e,List<Event> l )async {
    Navigator.pop(context);
-    setState(() {
-      l.add(e);
-    });
+   DateTime edate=e.date;
+   Map data=Map();
+   data["name"]=e.name;
+   data["date"]="${edate.year.toString()}-${edate.month.toString().padLeft(2,'0')}-${edate.day.toString().padLeft(2,'0')}";
+   http.Response res = await AuthServices.postData(data, 'events/add_event/?user_id=$id');
+   print(res.body);
+   setState(() {
+     l.add(e);
+   });
   }
 
- void delete(value){
+ void delete(Event e) async{
+   DateTime edate=e.date;
+   String sdate="${edate.year.toString()}-${edate.month.toString().padLeft(2,'0')}-${edate.day.toString().padLeft(2,'0')}";
+   http.Response res= await AuthServices.getData('events/event_id?event_date=$sdate');
+   int ide=int.parse(res.body);
+   res = await AuthServices.deleteData('events/{$ide}?event_date=$sdate');
     setState(() {
-      YourEvents.remove(value);
+      YourEvents.remove(e);
     });
     Navigator.pop(context);
  }
 
 
   void _onItemTapped(int index) {
-
+    YourEvents=[];
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
       case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
@@ -119,14 +134,17 @@ class _CalendarPageState extends State<CalendarPage> {
         toolbarHeight: 100,
         backgroundColor: Colors.blueAccent,
         leading:IconButton(onPressed: (){
+          YourEvents=[];
           Navigator.pop(context);
         }, icon:Icon(Icons.arrow_back_ios)),
         actions: [IconButton(onPressed: (){
+          YourEvents=[];
           Navigator.pushNamed(context,'/Profile' );
         },
             icon:
             CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
+              backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+              backgroundColor: Colors.transparent,
               radius: 30,
             ),iconSize: 60,
         )],

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Event  {
-  String type;
+  String name;
   DateTime date;
-  Event(this.type,this.date);
+  int owner_id;
+  Event(this.name,this.date,this.owner_id);
 
 
 }

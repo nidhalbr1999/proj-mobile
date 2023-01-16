@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-// 'package:url_launcher/url_launcher_string.dart';
+import 'package:project1/pages/LoginPage.dart';
+import 'package:project1/api/auth_services.dart';
 import 'dart:async';
 
 class clothesshop extends StatefulWidget {
@@ -48,7 +49,8 @@ class _clothesshopState extends State<clothesshop> {
         },
             icon:
             CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
+              backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+              backgroundColor: Colors.transparent,
               radius: 30,
             ),
           iconSize: 60,

@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:project1/api/auth_services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:project1/pages/LoginPage.dart';
 
 List responseList=[];
 
@@ -63,10 +64,35 @@ class _wardrobepageState extends State<wardrobepage> with SingleTickerProviderSt
 
   }
 
-void pressToGet(String apiUrl,List list)async{
+Future<List> pressToGetList(String apiUrl,int categ)async{
+    List list=[];
+    List byCateg=[[],[],[],[]];
   http.Response res= await AuthServices.getData(apiUrl);
-  setState(() { list = jsonDecode(res.body);});
-  print(res.body);
+  list = jsonDecode(res.body);
+
+  setState(() {
+      for (int i=0;i<list.length;i++) {
+        if (list[i]["category_id"]== 1){
+          byCateg[0].add(list[i]);
+        }else if (list[i]["category_id"]== 2){
+          byCateg[1].add(list[i]);
+        } else if (list[i]["category_id"]== 3){
+          byCateg[2].add(list[i]);
+        }else{
+          byCateg[3].add(list[i]);
+        }
+
+  }});
+  if (categ==1){
+    return byCateg[0];
+  } else if (categ==2){
+    return byCateg[1];
+  }else if (categ==3){
+    return byCateg[2];
+  }else {
+    return byCateg[3];
+  }
+
 }
   @override
   Widget build(BuildContext context) {
@@ -84,7 +110,8 @@ void pressToGet(String apiUrl,List list)async{
         },
             icon:
             CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
+              backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+              backgroundColor: Colors.transparent,
               radius: 30,
             ),
           iconSize: 60,
@@ -124,7 +151,7 @@ void pressToGet(String apiUrl,List list)async{
                         const Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                         GestureDetector(
                           onTap: () async{
-                           pressToGet('clothes/?user_id=1&skip=0&limit=100',responseList);
+                            responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',1);
                             Navigator.pushNamed(context,'/Tops' );
                           },
                           child:Container(
@@ -155,7 +182,8 @@ void pressToGet(String apiUrl,List list)async{
                       children:<Widget> [
                         Padding ( padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async{
+                            responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',2);
                             Navigator.pushNamed(context,'/Bottoms');
                           },
                           child:Container(
@@ -194,7 +222,8 @@ void pressToGet(String apiUrl,List list)async{
                         children: <Widget> [
                           Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                           GestureDetector(
-                            onTap:(){
+                            onTap:()async{
+                              responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',3);
                               Navigator.pushNamed(context,'/Shoes');
                             },
                             child:Container(
@@ -225,7 +254,8 @@ void pressToGet(String apiUrl,List list)async{
                         children: <Widget> [
                           Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                           GestureDetector(
-                            onTap:() {
+                            onTap:() async{
+                              responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',4);
                               Navigator.pushNamed(context,'/Jackets');
                             },
                             child:Container(
@@ -256,11 +286,6 @@ void pressToGet(String apiUrl,List list)async{
                     ]
                     )
             ),
-        /*floatingActionButton:FloatingActionButton(
-          onPressed:() =>getImage(ImageSource.camera),
-          tooltip:'add a new item' ,
-          child: Icon(Icons.camera_alt),
-        ),*/
         floatingActionButton: FloatingActionBubble(
           items: <Bubble>[
             Bubble(
@@ -269,9 +294,10 @@ void pressToGet(String apiUrl,List list)async{
               bubbleColor: Colors.blue,
               icon: Icons.camera_alt,
               titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-              onPress: () {
+              onPress: ()async {
                 _animationController!.reverse();
-                getImage(ImageSource.camera);
+                await getImage(ImageSource.camera);
+                AuthServices.uploadImage('clothes/uploadimage/',_image,"POST");
               },
             ),
             Bubble(
@@ -280,9 +306,10 @@ void pressToGet(String apiUrl,List list)async{
               bubbleColor: Colors.blue,
               icon: Icons.folder,
               titleStyle: TextStyle(fontSize: 16, color: Colors.white),
-              onPress: () {
+              onPress: () async{
                 _animationController!.reverse();
-                getImage(ImageSource.gallery);
+                await getImage(ImageSource.gallery);
+                AuthServices.uploadImage('clothes/uploadimage/',_image,"POST");
               },
             ),
 

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project1/pages/Homepage.dart';
+import 'package:project1/pages/LoginPage.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:http/http.dart' as http;
 
 
 class profilepage extends StatefulWidget {
@@ -59,7 +61,7 @@ class _profilepageState extends State<profilepage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-              'Edit Profile',
+              'Profile',
               style:TextStyle(
                   color:Colors.black,
                   letterSpacing: 2.0,
@@ -67,20 +69,23 @@ class _profilepageState extends State<profilepage> {
                   fontWeight: FontWeight.bold
               )
           ),
-          SizedBox(height:10),
+          SizedBox(height:20),
           PopupMenuButton(
               offset: const Offset(70, 60),
-              onSelected: (x){
+              onSelected: (x)async{
                 if (x==1) {
-                  getImage(ImageSource.gallery);
+                  await getImage(ImageSource.gallery);
+                  AuthServices.uploadImage('User/{$id}/uploadimage/',_image,"PUT");
                 }
                 else {
-                  getImage(ImageSource.camera);
+                  await getImage(ImageSource.camera);
+                  AuthServices.uploadImage('User/{$id}/uploadimage/',_image,"PUT");
                 }
               },
               child: Center(
                   child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/userpic.jpg'),
+                    backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+                    backgroundColor: Colors.transparent,
                     radius: 80,
                   )),
               itemBuilder: (context) => [
@@ -89,13 +94,52 @@ class _profilepageState extends State<profilepage> {
               ]
           ),
           SizedBox( height: 30),
+          Container(
+            child:
+          ListTile(
+            leading: Text("Full Name:",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.w700,
+                )),
+            title: Text(responseMap["username"],style:TextStyle(fontSize: 20,fontWeight: FontWeight.w400),
+            ))
+          ),
+          ListTile(
+              leading: Text("E-mail:",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.w700,
+                  )),
+              title: Text(responseMap["email"],style:TextStyle(fontSize: 20,fontWeight: FontWeight.w400)),
+          ),
 
-          buildTextField("Full Name", responseMap["username"], false),
-          buildTextField("E-mail", responseMap["email"], false),
-          buildTextField("Password", "***********", true),
+          ListTile(
+              leading: Text("Gender:",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.w700,
+                  )),
+              title: Text(responseMap["sexe"],style:TextStyle(fontSize: 20,fontWeight: FontWeight.w400))
+          ),
+          ListTile(
+              leading: Text("Age:",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.w700,
+                  )),
+              title: Text(responseMap["age"].toString(),style:TextStyle(fontSize: 20,fontWeight: FontWeight.w400))
+          ),
+
+          SizedBox(height: 30,),
           OutlinedButton.icon(
               onPressed: () {
-                Navigator.pushNamed(context,'/Login' );
+                print(responseMap);
+                //Navigator.pushNamed(context,'/Login' );
               },
               icon:Icon(Icons.logout),
               label:Text('Logout',

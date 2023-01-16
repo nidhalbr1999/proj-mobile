@@ -3,15 +3,14 @@ import 'package:project1/pages/MyWardrobe.dart';
 import 'package:project1/api/auth_services.dart';
 import 'package:project1/pages/LoginPage.dart';
 
-
-class Shoes extends StatefulWidget {
-  const Shoes({Key? key}) : super(key: key);
+class JacketsSug extends StatefulWidget {
+  const JacketsSug({Key? key}) : super(key: key);
 
   @override
-  State<Shoes> createState() => _ShoesState();
+  State<JacketsSug> createState() => _JacketsSugState();
 }
 
-class _ShoesState extends State<Shoes> {
+class _JacketsSugState extends State<JacketsSug> {
   void _onItemTapped(int index) {
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -19,8 +18,6 @@ class _ShoesState extends State<Shoes> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +48,7 @@ class _ShoesState extends State<Shoes> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'Shoes',
+                    'Jackets',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,

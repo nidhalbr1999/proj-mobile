@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:project1/pages/MyWardrobe.dart';
 import 'package:project1/api/auth_services.dart';
+import 'package:project1/pages/matchmystyle.dart';
 import 'package:project1/pages/LoginPage.dart';
 
 
-class Shoes extends StatefulWidget {
-  const Shoes({Key? key}) : super(key: key);
+
+class outfitSuggested extends StatefulWidget {
+  const outfitSuggested({Key? key}) : super(key: key);
 
   @override
-  State<Shoes> createState() => _ShoesState();
+  State<outfitSuggested> createState() => _outfitSuggestedState();
 }
 
-class _ShoesState extends State<Shoes> {
+class _outfitSuggestedState extends State<outfitSuggested> {
+
   void _onItemTapped(int index) {
     switch(index){
       case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
@@ -19,8 +21,6 @@ class _ShoesState extends State<Shoes> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +51,7 @@ class _ShoesState extends State<Shoes> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                    'Shoes',
+                    'Outfit Suggested',
                     style:TextStyle(
                         color:Colors.black,
                         letterSpacing: 2.0,
@@ -60,15 +60,18 @@ class _ShoesState extends State<Shoes> {
                     )
                 ),
 
+
                 SizedBox(height: 50,width: 0,),
                 Wrap(
                   children: <Widget>[
-                    for (int i=0;i<responseList.length;i++)
-                      Container(width: 150, height: 150, child:Image.network(serverurl+responseList[i]["image"].substring(3))),
+                    for (int i=0;i<outfitlist.length;i++)
+                      Container(width: 150, height: 150, child:Image.network(serverurl+outfitlist[i]["image"].substring(3))),
                   ],
                   runSpacing: 8.0,
                   textDirection: TextDirection.ltr,
                 ),
+
+
                 SizedBox(height: 50,width: 0,),
               ]
           )

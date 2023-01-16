@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:project1/pages/LoginPage.dart';
 import 'package:project1/services/Maindraw.dart';
 import 'package:project1/api/auth_services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:project1/services/EventClass.dart';
 
-Map responseMap=Map();
+
+
+List<Event> YourEvents = [];
+
 
 class FirstPage extends StatefulWidget {
 
@@ -29,10 +34,17 @@ class _FirstPageState extends State<FirstPage> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
-  void pressToGet(String apiUrl,Map map)async{
+  Future<Map<dynamic,dynamic>> pressToGetMap (String apiUrl)async{
+    Map<dynamic,dynamic> map=Map();
     http.Response res= await AuthServices.getData(apiUrl);
     setState(() { map = jsonDecode(res.body);});
+    return map;
+  }
+
+  Future<int> getid(String urlapi)async{
+    http.Response res= await AuthServices.getData(urlapi);
     print(res.body);
+    return int.parse(res.body);
   }
 
   @override
@@ -43,12 +55,13 @@ class _FirstPageState extends State<FirstPage> {
         toolbarHeight: 100,
         backgroundColor: Colors.blueAccent,
         actions: [IconButton(onPressed: ()async{
-          pressToGet('User/2',responseMap);
+          print(responseMap);
           Navigator.pushNamed(context,'/Profile' );
         },
             icon:
             CircleAvatar(
-              backgroundImage: AssetImage('assets/user.JPG'),
+              backgroundImage: AssetImage('C:\Users\nidhal\Desktop\project1\assets/userpic.jpg'),
+              backgroundColor: Colors.transparent,
               radius: 30,
             ),
             iconSize: 60,
@@ -62,6 +75,7 @@ class _FirstPageState extends State<FirstPage> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 40,),
                 Text(
                     'CHOOSE YOUR',
                     style:TextStyle(
@@ -80,9 +94,8 @@ class _FirstPageState extends State<FirstPage> {
                         fontWeight: FontWeight.bold
                     )
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 70.0),
 
-                SizedBox(height: 10.0),
                 Row(
                     children: <Widget>[
                       SizedBox(width: 10.0),
@@ -91,49 +104,50 @@ class _FirstPageState extends State<FirstPage> {
                         onTap: () {
                           Navigator.pushNamed(context,'/MyWardrobe' );
                         },
-                        child: Image.asset(
-                          'assets/1.JPG',
-                          width: 150.0,
-                          height: 150.0,
-                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: Image.asset(
+                            'assets/1.JPG',
+                            width: 150.0,
+                            height: 150.0,
+                          ),  )
                       ),
-                      SizedBox(width: 10.0),
+                      SizedBox(width: 10.0,),
                       GestureDetector(
-                        onTap: () {
+                        onTap: ()async {
+                          List list=[];
+                          http.Response res= await AuthServices.getData('events/?skip=0&limit=100');
+                          print(res.body);
+                          list=jsonDecode(res.body);
+                          for (int i=0;i<list.length;i++){
+                            YourEvents.add(new Event(list[i]["name"],DateTime.parse(list[i]["date"]+' 00:00:00.000'),list[i]["owner id"]));
+                          }
                           Navigator.pushNamed(context,'/Calendar' );
                         },
-                        child: Image.asset(
-                          'assets/2.JPG',
-                          width: 150.0,
-                          height: 150.0,
-                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30.0),
+                          child: Image.asset(
+                            'assets/2.JPG',
+                            width: 150.0,
+                            height: 150.0,
+                          ),  )
                       ),
 
                     ]
                 ),
-                SizedBox(height: 10.0),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context,'/matchmystyle' );
                   },
-                  child: Image.asset(
-                    'assets/3.JPG',
-                    width: 300.0,
-                    height: 100.0,
-                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Image.asset(
+                      'assets/3.JPG',
+                      width: 300.0,
+                      height: 150.0,
+                    ),  )
                 ),
 
-                SizedBox(height: 10.0),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context,'/FavoriteClothes');
-                  },
-                  child: Image.asset(
-                    'assets/4.JPG',
-                    width: 300.0,
-                    height: 100.0,
-                  ),
-                ),
 
               ]
           )

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project1/pages/MyWardrobe.dart';
+import 'package:project1/api/auth_services.dart';
+import 'package:project1/pages/LoginPage.dart';
 
 
 class Bottoms extends StatefulWidget {
@@ -18,17 +21,6 @@ class _BottomsState extends State<Bottoms> {
     }
   }
 
-  List imgList = [
-    Image.asset('Images/S1.png'),
-    Image.asset('Images/S3.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    Image.asset('Images/S2.png'),
-    //Image.asset('Images/S2.png'),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +36,8 @@ class _BottomsState extends State<Bottoms> {
         },
           icon:
           CircleAvatar(
-            backgroundImage: AssetImage('assets/user.JPG'),
+            backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
+            backgroundColor: Colors.transparent,
             radius: 30,
           ),
           iconSize: 60,
@@ -68,15 +61,15 @@ class _BottomsState extends State<Bottoms> {
                 ),
 
                 SizedBox(height: 50,width: 0,),
-                for (int i=0;i<imgList.length;i+=2)
-                  Center(
-                    child:Row(children: [SizedBox(height: 0,width: 50,),
-                      Container(width: 100, height: 100, child:imgList[i]),
-                      SizedBox(height: 0,width: 30,),
-                      Container(width: 100, height: 100, child: imgList[i+1]),
-                    ],),
+                Wrap(
+                  children: <Widget>[
+                    for (int i=0;i<responseList.length;i++)
+                      Container(width: 150, height: 150, child:Image.network(serverurl+responseList[i]["image"].substring(3))),
+                  ],
+                  runSpacing: 8.0,
+                  textDirection: TextDirection.ltr,
+                ),
 
-                  ),
                 SizedBox(height: 50,width: 0,),
               ]
           )
