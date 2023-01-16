@@ -16,9 +16,16 @@ class _outfitSuggestedState extends State<outfitSuggested> {
 
   void _onItemTapped(int index) {
     switch(index){
-      case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
-      case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
-      case 2 :{Navigator.pushNamed(context,'/Settings');}
+      case 0: {setState(() {
+        outfitlist=[];
+      });
+        Navigator.pushNamed(context,'/ClothesShop');}break;
+      case 1 :{setState(() {
+        outfitlist=[];
+      });Navigator.pushNamed(context,'/Homepage');}break;
+      case 2 :{setState(() {
+        outfitlist=[];
+      });Navigator.pushNamed(context,'/Settings');}
     }
   }
   @override
@@ -29,6 +36,9 @@ class _outfitSuggestedState extends State<outfitSuggested> {
         toolbarHeight: 100,
         backgroundColor: Colors.blueAccent,
         leading:IconButton(onPressed: (){
+          setState(() {
+            outfitlist=[];
+          });
           Navigator.pop(context);
         }, icon:Icon(Icons.arrow_back_ios)),
         actions: [IconButton(onPressed: (){

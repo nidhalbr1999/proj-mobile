@@ -4,8 +4,9 @@ import 'package:project1/api/auth_services.dart';
 import 'package:project1/pages/LoginPage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:project1/pages/MywardrobeSug.dart';
 
-List outfitlist2=[];
+List outfitlistB=[];
 
 class BottomsSug extends StatefulWidget {
   const BottomsSug({Key? key}) : super(key: key);
@@ -84,13 +85,13 @@ class _BottomsSugState extends State<BottomsSug> {
                 SizedBox(height: 50,width: 0,),
                 Wrap(
                   children: <Widget>[
-                    for (int i=0;i<responseList.length;i++)
+                    for (int i=0;i<responseList1.length;i++)
                       Container(width: 150, height: 150, child:GestureDetector(
-                         child: Image.network(serverurl+responseList[i]["image"].substring(3)),
+                         child: Image.network(serverurl+responseList1[i]["image"].substring(3)),
                         onTap: ()async{
-                        outfitlist2=await getOutfit('clothes/outfit/?image_path=${responseList[i]["image"]}');
-                        if (outfitlist2.isNotEmpty) {
-                          print(outfitlist2);
+                        outfitlistB=await getOutfit('clothes/outfit/?image_path=${responseList1[i]["image"]}');
+                        if (outfitlistB.isNotEmpty) {
+                          print(outfitlistB);
                          Navigator.pushNamed(context, '/Outfit');
                         }else{
                         openDialog();

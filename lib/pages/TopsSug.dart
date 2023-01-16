@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project1/api/auth_services.dart';
 import 'package:project1/pages/MyWardrobe.dart';
+import 'package:project1/pages/MywardrobeSug.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'package:project1/pages/LoginPage.dart';
 
+List outfitlistT=[];
 
 class Topssug extends StatefulWidget {
   const Topssug({Key? key}) : super(key: key);
@@ -21,6 +25,23 @@ class _TopssugState extends State<Topssug> {
       case 2 :{Navigator.pushNamed(context,'/Settings');}
     }
   }
+  Future<List> getOutfit(String apiurl) async{
+    http.Response res= await AuthServices.getData(apiurl);
+    if (jsonDecode(res.body)is Map){
+      return [];
+    }else{
+      return jsonDecode(res.body);}
+  }
+  Future openDialog() => showDialog(context: context,
+      builder: (content)=>AlertDialog(
+        title:Text('Sorry'),
+        content: Text('we didnt find an outfit for you, update your wardrobe and try again'),
+        actions: [
+          TextButton(child: Text('done'),onPressed:()=>
+              Navigator.pop(context))
+        ],
+
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +86,21 @@ class _TopssugState extends State<Topssug> {
                 SizedBox(height: 50,width: 0,),
                 Wrap(
                   children: <Widget>[
-                    for (int i=0;i<responseList.length;i++)
-                      Container(width: 150, height: 150, child:Image.network(serverurl+responseList[i]["image"].substring(3))),
+                    for (int i=0;i<responseList1.length;i++)
+                      Container(width: 150, height: 150, child:GestureDetector(
+                          child: Image.network(serverurl+responseList1[i]["image"].substring(3)),
+                          onTap: ()async{
+                            outfitlistT=await getOutfit('clothes/outfit/?image_path=${responseList1[i]["image"]}');
+                            if (outfitlistT.isNotEmpty) {
+                              print(outfitlistT);
+                              Navigator.pushNamed(context, '/Outfit');
+                            }else{
+                              openDialog();
+                            }
+                          }
+
+                      ),
+                      ),
                   ],
                   runSpacing: 8.0,
                   textDirection: TextDirection.ltr,

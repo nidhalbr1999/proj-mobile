@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project1/pages/LoginPage.dart';
 
-List responseList=[];
+List responseList1=[];
 class MywordrobeSug extends StatefulWidget {
   const MywordrobeSug({Key? key}) : super(key: key);
 
@@ -150,7 +150,7 @@ class _MywordrobeSugState extends State<MywordrobeSug> with SingleTickerProvider
                           const Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                           GestureDetector(
                             onTap: () async{
-                              responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',1);
+                              responseList1=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',1);
                               Navigator.pushNamed(context,'/TopsSug' );
                             },
                             child:Container(
@@ -182,7 +182,7 @@ class _MywordrobeSugState extends State<MywordrobeSug> with SingleTickerProvider
                           Padding ( padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                           GestureDetector(
                             onTap: () async{
-                              responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',2);
+                              responseList1=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',2);
                               Navigator.pushNamed(context,'/BottomsSug');
                             },
                             child:Container(
@@ -222,7 +222,7 @@ class _MywordrobeSugState extends State<MywordrobeSug> with SingleTickerProvider
                             Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                             GestureDetector(
                               onTap:()async{
-                                responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',3);
+                                responseList1=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',3);
                                 Navigator.pushNamed(context,'/ShoesSug');
                               },
                               child:Container(
@@ -254,7 +254,7 @@ class _MywordrobeSugState extends State<MywordrobeSug> with SingleTickerProvider
                             Padding (padding: EdgeInsets.fromLTRB(0.0,0.0,0.0,30.0)),
                             GestureDetector(
                               onTap:() async{
-                                responseList=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',4);
+                                responseList1=await pressToGetList('clothes/?user_id=$id&skip=0&limit=100',4);
                                 Navigator.pushNamed(context,'/JacketsSug');
                               },
                               child:Container(

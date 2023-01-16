@@ -33,7 +33,11 @@ class _LoginPageState extends State<LoginPage> {
   Future<Map<dynamic,dynamic>> pressToGetMap (String apiUrl)async{
     Map<dynamic,dynamic> map=Map();
     http.Response res= await AuthServices.getData(apiUrl);
-    setState(() { map = jsonDecode(res.body);});
+    setState(() { map = jsonDecode(res.body);
+              if (map["image"]==null){
+                  map["image"]=".//static//images//1ac6c2bcec5f262f4837.png";
+              }
+    });
     return map;
   }
 
@@ -172,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (_formKey.currentState!.validate()) {
                               loginPressed();
                               id=await getid('User/user_id');
-                              print(id);
+                              print('$id is the id');
                               responseMap=await pressToGetMap('User/{$id}');
                             }
                           },

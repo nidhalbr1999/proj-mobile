@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 
 
-String serverurl='https://8fb4-102-157-58-208.eu.ngrok.io/';
+String serverurl='https://1635-196-203-166-194.eu.ngrok.io/';
 
 class AuthServices {
   static String token ='';

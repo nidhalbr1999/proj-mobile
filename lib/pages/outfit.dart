@@ -20,11 +20,32 @@ class _outfitSugState extends State<outfitSug> {
 
   void _onItemTapped(int index) {
     switch(index){
-      case 0: {Navigator.pushNamed(context,'/ClothesShop');}break;
-      case 1 :{Navigator.pushNamed(context,'/Homepage');}break;
-      case 2 :{Navigator.pushNamed(context,'/Settings');}
+      case 0: {setState(() {
+        list =[];
+        outfitlistT=[];
+        outfitlistS=[];
+        outfitlistB=[];
+        outfitlistJ=[];
+
+      }); Navigator.pushNamed(context,'/ClothesShop');}break;
+      case 1 :{setState(() {
+        list =[];
+        outfitlistT=[];
+        outfitlistS=[];
+        outfitlistB=[];
+        outfitlistJ=[];
+      }); Navigator.pushNamed(context,'/Homepage');}break;
+      case 2 :{setState(() {
+        list =[];
+        outfitlistT=[];
+        outfitlistS=[];
+        outfitlistB=[];
+        outfitlistJ=[];
+      }); Navigator.pushNamed(context,'/Settings');}
     }
   }
+
+  List list =outfitlistT+outfitlistB+outfitlistJ+outfitlistS;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +55,13 @@ class _outfitSugState extends State<outfitSug> {
         toolbarHeight: 100,
         backgroundColor: Colors.blueAccent,
         leading:IconButton(onPressed: (){
+          setState(() {
+            list =[];
+            outfitlistT=[];
+            outfitlistS=[];
+            outfitlistB=[];
+            outfitlistJ=[];
+          });
           Navigator.pop(context);
         }, icon:Icon(Icons.arrow_back_ios)),
         actions: [IconButton(onPressed: (){
@@ -69,8 +97,8 @@ class _outfitSugState extends State<outfitSug> {
                 SizedBox(height: 50,width: 0,),
                 Wrap(
                   children: <Widget>[
-                    for (int i=0;i<outfitlist2.length;i++)
-                      Container(width: 150, height: 150, child:Image.network(serverurl+outfitlist2[i]["image"].substring(3))),
+                    for (int i=0;i<list.length;i++)
+                      Container(width: 150, height: 150, child:Image.network(serverurl+list[i]["image"].substring(3))),
                   ],
                   runSpacing: 8.0,
                   textDirection: TextDirection.ltr,
