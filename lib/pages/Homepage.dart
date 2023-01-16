@@ -54,18 +54,6 @@ class _FirstPageState extends State<FirstPage> {
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.blueAccent,
-       /* actions: [IconButton(onPressed: ()async{
-          print(responseMap);
-          Navigator.pushNamed(context,'/Profile' );
-        },
-            icon:
-            CircleAvatar(
-              backgroundImage: NetworkImage(serverurl+responseMap["image"].substring(3)),
-              backgroundColor: Colors.transparent,
-              radius: 30,
-            ),
-            iconSize: 60,
-        )],*/
         elevation: 0.0,
       ),
         drawer: Drawer(

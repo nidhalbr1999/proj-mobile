@@ -55,8 +55,11 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
 
         SharedPreferences localStorage = await SharedPreferences.getInstance();
-        localStorage.setString('token', responseMap["access_token"]);
-        localStorage.setString('email', _email);
+        setState((){
+          localStorage.setString('token', responseMap["access_token"]);
+          localStorage.setString('email', _email);
+        });
+
 
 
         Navigator.push(
@@ -174,10 +177,10 @@ class _LoginPageState extends State<LoginPage> {
                       OutlinedButton.icon(
                           onPressed: ()async {
                             if (_formKey.currentState!.validate()) {
-                              loginPressed();
-                              id=await getid('User/user_id');
-                              print('$id is the id');
-                              responseMap=await pressToGetMap('User/{$id}');
+                                await loginPressed();
+                                id=await getid('User/user_id');
+                                responseMap=await pressToGetMap('User/{$id}');
+
                             }
                           },
                           icon: Icon(Icons.login),
